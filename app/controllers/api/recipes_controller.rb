@@ -1,6 +1,7 @@
 module Api 
   class RecipesController < ApplicationController
     before_action :set_recipe, only: :show
+    protect_from_forgery with: :null_session
 
     def index
       recipes = Recipe.all
@@ -14,10 +15,12 @@ module Api
 
     def create
       recipe = Recipe.new(recipe_params)
-  
-      return render json: {error: recipe.errors.messages }, status: 422 unless recipe.save!
 
-      render json: RecipeSerializer.new(recipe).serialized_json
+      if recipe.save
+        render json: RecipeSerializer.new(recipe).serialized_json
+      else
+        render json: {error: recipe.errors.messages }, status: 422 
+      end
 
     end
 
@@ -28,9 +31,8 @@ module Api
     end
 
     def recipe_params
-      params.require(:recipe).permit(:title, :description, :image_url, :cook_time, :prep_time)
+      params.require(:recipe).permit(:title, :description, :image_url, :cook_time, :prep_time, :category_id, :author_id)
     end
-
   end
 end
   
