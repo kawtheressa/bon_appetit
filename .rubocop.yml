@@ -1,0 +1,25 @@
+AllCops:
+  Include:
+    - foo.unusual_extension
+    - '**/*.rb'
+    - '**/*.gemfile'
+    - '**/*.gemspec'
+    - '**/*.rake'
+    - '**/*.ru'
+    - '**/Gemfile'
+    - '**/Rakefile'
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'bin/{rails,rake}'
+
+Metrics/MethodLength:
+  Enabled: true
+  max: 10
+
+Style:
+  Enabled: false
+
+Style/Alias:
+  Enabled: true
