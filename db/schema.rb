@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 2022_04_11_095444) do
   end
 
   create_table "ingredients", force: :cascade do |t|
-    t.text "steps"
+    t.text "ingredient"
     t.bigint "author_id", null: false
     t.bigint "recipe_id", null: false
     t.datetime "created_at", precision: 6, null: false

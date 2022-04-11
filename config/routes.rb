@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   namespace :api do
     resources :recipes
 
-    post 'recipes/:id/ingredients', to: 'ingredients#upsert_ingrediantis'
+    post 'recipes/:id/ingredients', to: 'ingredients#bulk_insert'
   end
 
   get '*path', to: 'pages#index', via: :all
