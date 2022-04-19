@@ -17,7 +17,7 @@ module Api
       recipe = Recipe.new(recipe_params)
 
       if recipe.save
-        render json: RecipeSerializer.new(recipe, OPTIONS).serialized_json
+        render json: RecipeSerializer.new(recipe).serialized_json
       else
         render json: {error: recipe.errors.messages }, status: 422 
       end
