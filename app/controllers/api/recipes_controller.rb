@@ -4,8 +4,8 @@ module Api
     protect_from_forgery with: :null_session
 
     def index
+      
       recipes = Recipe.all
-
       render json: RecipeSerializer.new(recipes).serialized_json
     end
 
@@ -17,7 +17,7 @@ module Api
       recipe = Recipe.new(recipe_params)
 
       if recipe.save
-        render json: RecipeSerializer.new(recipe).serialized_json
+        render json: RecipeSerializer.new(recipe, OPTIONS).serialized_json
       else
         render json: {error: recipe.errors.messages }, status: 422 
       end
