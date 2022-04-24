@@ -1,31 +1,34 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
-import { Badge, Card, Row, ListGroup } from "react-bootstrap";
+import { Card, ListGroup } from "react-bootstrap";
 
+const center = {
+  width: '100%',
+  display: 'flex'
+};
 
-const RecipeCardDiv = styled(Card)`
-display: flex;
-align-items: center;
-justify-content: center;
+const RecipeImageCardDiv = styled(Card)`
+width: 35%;
+margin: auto;
+margin-top: 15%;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+border-radius: 4px;
 `;
 
-const RecipeTitle = styled(Card.Title)`
-  text-transform: capitalize;
+
+const RecipeSectionCardDiv = styled(Card)`
+width: 50%;
+float: left;
+margin-left: 5%;
+margin-right: 5%;
+margin-top: 5%;
+
 `;
 
-const CardLink = styled.a`
-  text-decoration: none;
-  color: #303030;
-  :hover {
-    text-decoration: none;
-    color: #303030;
-  }
-`
 
 const Recipe = (props) => {
   const [recipe, setRecipe] = useState()
-  const [loaded] = useState(false)
 
   useEffect(() => {
     const id = props.match.params.id
@@ -41,26 +44,31 @@ const Recipe = (props) => {
     }
 
   return (
-    <div key={recipe.data.attributes.id.toString()} className="col-6">
-      <RecipeCardDiv className="border">
-        <CardLink href={"/#/recipe/" + 1}>
-          <Card.Img className="border" variant="bottom" width="50%" height="50%" src={recipe.data.attributes.image_url} />
-          <Card.Body>
-            <RecipeTitle>
-            {recipe.data.attributes.title}
-            </RecipeTitle>
-            <ListGroup as="ul">
-              {recipe.data.attributes.ingredients.map((ingredient, index) => {
-                return(
-                  <ListGroup.Item as="li">
-                    {ingredient.ingredient}
-                  </ListGroup.Item>
-                )
-              })}
-            </ListGroup>
-          </Card.Body>
-        </CardLink>
-      </RecipeCardDiv>
+    <div style={center} key={recipe.data.attributes.id.toString()} className="col-6">
+      
+      <RecipeSectionCardDiv >
+      <h1>{recipe.data.attributes.title} </h1>
+        <Card.Body>
+          <h1> Ingredients </h1>
+          <ListGroup as="ul">
+            {recipe.data.attributes.ingredients.map((ingredient) => {
+              return(
+                <ListGroup.Item as="li" >
+                  {ingredient.ingredient}
+                </ListGroup.Item>
+              )
+            })}
+          </ListGroup>
+          <h1> Preperation </h1>
+          <p>{recipe.data.attributes.description}</p>
+        </Card.Body>
+      </RecipeSectionCardDiv>
+  
+      <RecipeImageCardDiv>
+        <Card.Body>
+          <Card.Img variant="bottom" width="100%" height="100%" src={recipe.data.attributes.image_url} />
+        </Card.Body>
+      </RecipeImageCardDiv>
     </div>
   );
 }
